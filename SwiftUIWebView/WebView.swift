@@ -62,8 +62,8 @@ struct WebView: UIViewRepresentable, WebViewHandlerDelegate {
                 webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
             }
         } else if url == .publicUrl {
-            // Load a public website, for example I used here google.com
-            if let url = URL(string: "https://www.google.com") {
+            // Load a public website, for example I used here orange.fr
+            if let url = URL(string: "https://www.orange.fr") {
                 webView.load(URLRequest(url: url))
             }
         }
@@ -116,6 +116,9 @@ struct WebView: UIViewRepresentable, WebViewHandlerDelegate {
             
             // Page loaded so no need to show loader anymore
             self.parent.viewModel.showLoader.send(false)
+
+            webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { (cookies) in print(cookies)
+            }
         }
         
         /* Here I implemented most of the WKWebView's delegate functions so that you can know them and
